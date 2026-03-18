@@ -1,0 +1,6 @@
+﻿© 2026 HENRY CHACON. Todos los derechos reservados.
+
+Este software fue desarrollado como proyecto académico.
+Queda prohibida su copia, modificación o distribución sin autorización del autor.
+
+Todos los derechos reservados.

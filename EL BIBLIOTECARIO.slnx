@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="EL BIBLIOTECARIO.csproj" Id="f691e9fc-14c3-43ff-8ec0-c0c95230a130">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+</Solution>
