@@ -1,0 +1,6 @@
+Nombre,Correo,Estado
+Carlos Rodríguez Pérez,carlos@email.com,Activo
+María García López,maria@email.com,Activo
+Juan Martínez,juan@email.com,Inactivo
+Ana Torres,ana@email.com,Activo
+Pedro Fernández,pedro@email.com,Suspendido

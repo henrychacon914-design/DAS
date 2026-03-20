@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
@@ -15,14 +16,23 @@ namespace EL_BIBLIOTECARIO
         public Form_AñadirPrestamo()
         {
             InitializeComponent();
-            CargarLibros();
-            CargarUsuarios();
         }
 
         private void Form_AñadirPrestamo_Load(object sender, EventArgs e)
         {
+            if (EsModoDiseno())
+                return;
+
             dtpPrestamo.Value = DateTime.Now;
             dtpDevolucion.Value = DateTime.Now.AddDays(7);
+
+            CargarLibros();
+            CargarUsuarios();
+        }
+
+        private bool EsModoDiseno()
+        {
+            return LicenseManager.UsageMode == LicenseUsageMode.Designtime || DesignMode;
         }
 
         private void CargarLibros()
@@ -47,7 +57,7 @@ namespace EL_BIBLIOTECARIO
                             {
                                 string titulo = datos[0].Trim();
                                 string autor = datos[1].Trim();
-                                string disponiblesTexto = datos[4].Trim(); // ejemplo: 3 / 5
+                                string disponiblesTexto = datos[4].Trim();
 
                                 string[] partes = disponiblesTexto.Split('/');
 
@@ -57,9 +67,7 @@ namespace EL_BIBLIOTECARIO
                                     int.TryParse(partes[0].Trim(), out disponibles);
 
                                     if (disponibles > 0)
-                                    {
                                         cmbLibro.Items.Add(titulo + " - " + autor);
-                                    }
                                 }
                             }
                         }
@@ -67,10 +75,6 @@ namespace EL_BIBLIOTECARIO
 
                     if (cmbLibro.Items.Count > 0)
                         cmbLibro.SelectedIndex = 0;
-                }
-                else
-                {
-                    MessageBox.Show("No se encontró el archivo mis_libros.csv");
                 }
             }
             catch (Exception ex)
@@ -155,7 +159,7 @@ namespace EL_BIBLIOTECARIO
 
                         if (textoCombo == libroSeleccionado)
                         {
-                            string disponibilidad = datos[4].Trim(); // ejemplo 3 / 5
+                            string disponibilidad = datos[4].Trim();
                             string[] partes = disponibilidad.Split('/');
 
                             if (partes.Length >= 2)
@@ -173,7 +177,6 @@ namespace EL_BIBLIOTECARIO
                                 }
 
                                 disponibles--;
-
                                 datos[4] = disponibles + " / " + total;
                                 lineas[i] = string.Join(",", datos);
                                 actualizado = true;
@@ -224,8 +227,7 @@ namespace EL_BIBLIOTECARIO
 
             bool ok = DescontarDisponibilidadLibro(libroSeleccionado);
 
-            if (!ok)
-                return;
+            if (!ok) return;
 
             Libro = libroSeleccionado;
             Usuario = usuarioSeleccionado;
@@ -233,22 +235,17 @@ namespace EL_BIBLIOTECARIO
             FechaFin = dtpDevolucion.Value.ToString("dd/MM/yyyy");
             EstadoPrestamo = "Activo";
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
-        private void cmbLibro_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cmbUsuario_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
+        private void cmbLibro_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void cmbUsuario_SelectedIndexChanged(object sender, EventArgs e) { }
     }
 }
